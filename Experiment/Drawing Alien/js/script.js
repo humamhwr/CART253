@@ -1,8 +1,8 @@
 /**************************************************
 Template p5 project
-Pippin Barr
+Hummam Houara
 
-Here is a description of this template p5 project.
+Drawing an Alein!
 **************************************************/
 
 // setup()
