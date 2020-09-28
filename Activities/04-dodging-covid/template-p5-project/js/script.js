@@ -40,6 +40,14 @@ covid19.vx = covid19.speed;
 // Description of draw() goes here.
 function draw() {
 background(0);
+
+// disaplay static
+for (let i =0; i < 1000; i++){
+let x = random(0,width);
+let y = random(0,height);
+stroke(255);
+point(x,y);
+}
 //covid19 movment
 covid19.x = covid19.x + covid19.vx;
 covid19.y = covid19.y + covid19.vy;
@@ -51,6 +59,12 @@ if (covid19.x > width){
 // user movment
  user.x = mouseX
  user.y = mouseY
+
+// check for catching covid19
+let d = dist(user.x,user.y,covid19.x,covid19.y);
+if(d < covid19.size/2 + user.size/2){
+  noLoop();
+}
 
 // display covid19
 fill(covid19.fill.r,covid19.fill.g,covid19.fill.b);
