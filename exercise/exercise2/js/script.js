@@ -62,18 +62,18 @@ function draw() {
   sneeze.x += sneeze.vx;
   sneeze.y += sneeze.vy;
 
-  noStroke();
-  masked.x += masked.vx;
-  masked.y += masked.vy;
+  // noStroke();
+  // masked.x += masked.vx;
+  // masked.y += masked.vy;
 
   if (sneeze.x > width) {
     sneeze.x = 0;
     sneeze.y = random(0, height);
   }
 
-  if (maksed.x > width) {
-    maksed.x = 0;
-    maksed.y = random(0, height);
+  if (masked.x > width) {
+    masked.x = 0;
+    masked.y = random(0, height);
   }
 //  changing the picture
   if (sneeze.y < height / 2) {
