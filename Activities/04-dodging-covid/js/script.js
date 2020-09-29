@@ -48,7 +48,6 @@ function draw() {
     stroke(255);
     point(x, y);
   }
-}
   //covid19 movment
   covid19.x = covid19.x + covid19.vx;
   covid19.y = covid19.y + covid19.vy;
