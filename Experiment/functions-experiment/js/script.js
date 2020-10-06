@@ -1,23 +1,25 @@
-function setup() {
-  createCanvas(500, 500);
+let bg = 0;
+
+function setup(){
+  createCanvas(500,500)
 }
 
-function draw() {
-  background(0);
+function draw (){
+  background(bg);
 
-  parallels(100,100,5,1,100,1);
-  parallels(50,50,10,2,20,10);
-  parallels(200,200,15,7,3,20);
-  parallels(312,257,20,0.5,300,1);
+  textAlign(CENTER,CENTER);
+  textSize(64);
+  fill(255);
+  text(keyCode,width/2,height/2);
 }
 
-function parallels(x, y, numLines,lineWidth,lineHeight,lineSpacing) {
-  for (let i = 0; i < numLines; i++) {
-    noStroke();
-    fill(255);
-    rectMode(CENTER);
-    rect(x, y, lineWidth, lineHeight);
-    x = x + lineSpacing;
-
+function keyPressed(){
+  if (keyCode === 38) {
+    bg = bg +10;
+    bg = constrain(bg,0,255);
   }
-}
+  else if (keyCode === 40) {
+    bg = bg -10;
+    bg = constrain(bg,0,255);
+  }
+  }
