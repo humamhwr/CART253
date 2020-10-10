@@ -10,6 +10,7 @@ let man1 = {
   string: '👨🏻‍',
   x: undefined,
   y: 500,
+  size: 100,
   vx: 0,
   vy: 0,
   speed: 6
@@ -46,20 +47,27 @@ let child = {
   string: '👶🏻',
   x: 0,
   y: 0,
+  size: 100,
+}
+let heart = {
+  x: 0,
+  y: 0,
+  image: undefined,
 }
 
 
-
-let state = `title`; // can be: title, simulation,love,sadness
-
+let state = `title`;
+function preLoad() {
+  heart.image = loadImage("assets/images/heart.png");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  setupCircles();
+  setupEmojis();
 }
 
 
-function setupCircles() {
+function setupEmojis() {
   man1.x = width / 3;
   man2.x = 2 * width / 3;
   woman1.x = width / 3;
@@ -87,10 +95,18 @@ function draw() {
     title();
   } else if (state === 'simulation') {
     simulation();
-  } else if (state === `love`) {
-    love();
+  } else if (state === `loveM`) {
+    loveM();
+  } else if (state === `loveF`) {
+    loveF();
+  } else if (state === `loveC`) {
+    loveC();
+  } else if (state === `loveB`) {
+    loveB();
   } else if (state === `sadness`) {
     sadness();
+  } else if (state === `charge`) {
+    charge();
   }
 }
 
@@ -109,16 +125,44 @@ function title() {
 function simulation() {
   move();
   checkOffscreen();
-  checkOverlap();
+  checkOverlapM();
+  checkOverlapF();
+  checkOverlapC();
+  checkOverlapB();
+  checkOverlapcharge();
+  checkOverlapchargeA();
+  checkOverlapchargeB();
+  checkOverlapchargeC();
   display();
 }
 
-function love() {
+function loveM() {
   push();
+  background(255,102,102);
   textSize(64);
   fill(255, 150, 150);
   textAlign(CENTER, CENTER);
-  text(`LOVE!`, width / 2, height / 2);
+  text(`MATCH!‍👨‍❤️‍👨`, width / 2, height / 2);
+  pop();
+}
+
+function loveF() {
+  push();
+  background(255,102,102);
+  textSize(64);
+  fill(255, 150, 150);
+  textAlign(CENTER, CENTER);
+  text(`MATCH!👩‍❤️‍👩`, width / 2, height / 2);
+  pop();
+}
+
+function loveC() {
+  push();
+  background(255,102,102);
+  textSize(64);
+  fill(255, 150, 150);
+  textAlign(CENTER, CENTER);
+  text(`MATCH!👩‍❤️‍👨`, width / 2, height / 2);
   pop();
 }
 
@@ -128,6 +172,15 @@ function sadness() {
   fill(150, 150, 255);
   textAlign(CENTER, CENTER);
   text(`no matches were made today😕`, width / 2, height / 2);
+  pop();
+}
+
+function charge() {
+  push();
+  textSize(40);
+  fill(150, 150, 255);
+  textAlign(CENTER, CENTER);
+  text(`🚨CHARGE!🚨`, width / 2, height / 2);
   pop();
 }
 
@@ -143,19 +196,89 @@ function move() {
 
   woman2.x = woman2.x + woman2.vx;
   woman2.y = woman2.y + woman2.vy;
+
+  // user movment
+  child.x = mouseX
+  child.y = mouseY
+  noCursor();
 }
 
+//if three characters leave the screen the state changes
 function checkOffscreen() {
-  if (man1.x < 0 || man1.x > width || man1.y < 0 || man1.y > height || man2.x < 0 || man2.x > width || man2.y < 0 || man2.y > height) {
+  if ((man1.x < 0 || man1.x > width || man1.y < 0 || man1.y > height) && (man2.x < 0 || man2.x > width || man2.y < 0 || man2.y > height) && (woman1.x < 0 || woman1.x > width || woman1.y < 0 || woman1.y > height)) {
     state = 'sadness';
   }
+
+
 }
 
-function checkOverlap() {
+function checkOverlapM() {
+
   //check if the circles overlap
   let d = dist(man1.x, man1.y, man2.x, man2.y);
   if (d < man1.size / 2 + man2.size / 2) {
-    state = 'love';
+    state = 'loveM';
+  }
+}
+
+function checkOverlapF() {
+  //check if the circles overlap
+  let d = dist(woman1.x, woman1.y, woman2.x, woman2.y);
+  if (d < man1.size / 2 + man2.size / 2) {
+    state = 'loveF';
+  }
+}
+
+function checkOverlapC() {
+  //check if the circles overlap
+  let d = dist(man1.x, man1.y, man2.x, man2.y, woman1.x, woman1.y, woman2.x, woman2.y);
+  if (d < man1.size / 2 + man2.size / 2) {
+    state = 'loveC';
+  }
+}
+
+function checkOverlapB() {
+  //check if the circles overlap
+  let d = dist(man1.x, man1.y, woman1.x, woman1.y);
+  if (d < man1.size / 2 + man2.size / 2) {
+    state = 'loveC';
+  }
+}
+
+function checkOverlapcharge() {
+  let a = dist(child.x, child.y, man1.x, man1.y, )
+
+  if (a < man1.size / 2 + child.size / 2) {
+    state = 'charge';
+
+
+  }
+}
+
+function checkOverlapchargeA() {
+  let d = dist(child.x, child.y, man2.x, man2.y, )
+
+  if (d < man2.size / 2 + child.size / 2) {
+    state = 'charge';
+
+  }
+}
+
+function checkOverlapchargeB() {
+  let d = dist(child.x, child.y, woman1.x, woman1.y, )
+
+  if (d < woman1.size / 2 + child.size / 2) {
+    state = 'charge';
+
+  }
+}
+
+function checkOverlapchargeC() {
+  let d = dist(child.x, child.y, woman2.x, woman2.y, )
+
+  if (d < woman2.size / 2 + child.size / 2) {
+    state = 'charge';
+
   }
 }
 
@@ -165,11 +288,12 @@ function display() {
   text(man2.string, man2.x, man2.y);
   text(woman1.string, woman1.x, woman1.y);
   text(woman2.string, woman2.x, woman2.y);
+  text(child.string, child.x, child.y)
 
 }
 
-function mousePressed() {
-  if (state === `title`) {
+function keyPressed() {
+  if (state === `title` && keyCode === 76) {
     state = 'simulation';
   }
 }
