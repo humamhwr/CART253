@@ -32,10 +32,7 @@ let letter = {
   vy: 0,
   speed: 3
 }
-let length = {
-  x: 450,
-  y: 700,
-}
+
 
 
 // setup()
@@ -98,9 +95,6 @@ function myFunction() {
   myVar = setInterval(generateRandomLetter, 3000);
 }
 
-function alertFunc() {
-  alert("Hello!");
-}
 
 function simulation() {
   pinao();
@@ -167,7 +161,7 @@ function instructions() {
   textSize(60);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
-  text(`welcome to the piano school!`, width / 2, height / 2);
+  text(`instructions`, width / 2, height / 2);
   text(`press spacebar for instructions`, width / 2, height / 1.5);
   textSize(10);
   text(`Use the keyboard to press the letters that come up on your screen!`, width / 2, height / 1.3);
@@ -180,8 +174,8 @@ function lose() {
   textSize(60);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
-  text(`welcome to the piano school!`, width / 2, height / 2);
-  text(`press spacebar for instructions`, width / 2, height / 1.5);
+  text(`losing state!`, width / 2, height / 2);
+  text(`press spacebar to play again`, width / 2, height / 1.5);
   textSize(10);
 }
 
