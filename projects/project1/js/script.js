@@ -1,7 +1,7 @@
 /**************************************************
 Project 1:
 A keyboard piano where the user has to press the key of the letter that will randomly pop on the screen
-and if they click the wrong key the user loses.
+and if they click the wrong key or the timer runs out the user loses.
 The program will have three states; intro, simulation and ending.
 
 **************************************************/
@@ -75,8 +75,6 @@ function preload() {
 
 function setup() {
   createCanvas(900, 800);
-
-  // letterVX = width / (allowedTime * 60);
 }
 
 // draw()
@@ -96,9 +94,10 @@ function draw() {
 
 let timer = 3
 
+//generating a random Letter from the notes array
 function generateRandomLetter() {
   var result = '';
-  var characters = ["Z", "X", "C", "V", "B", "N", "M","S", "D", "G", "H","J"];
+  var characters = ["Z", "X", "C", "V", "B", "N", "M", "S", "D", "G", "H", "J"];
   var charactersLength = characters.length;
 
   for (var i = 0; i < charactersLength; i++) {
@@ -106,45 +105,42 @@ function generateRandomLetter() {
   }
   return result;
 }
-
 x = generateRandomLetter();
 
-function myFunction() {
-  myVar = setInterval(generateRandomLetter, 3000);
-}
 
 
 function simulation() {
-background(spotlight.image);
+  background(spotlight.image);
   pinao();
   push();
-textAlign(CENTER, CENTER);
-fill(255);
-textSize(100);
-text(timer, 150, 150);
-pop();
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(100);
+  text(timer, 150, 150);
+  pop();
 
-if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
-  timer --;
-}
-if (timer == 0) {
-  state = `lose`;
-}
-letterX+= letterVX;
-textSize(100);
+// if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+  if (frameCount % 60 == 0 && timer > 0) {
+    timer--;
+  }
+  if (timer == 0) {
+    state = `lose`;
+  }
+  letterX += letterVX;
+  textSize(100);
   text(x, letterX, 250);
 
   if (keyCode == x.charCodeAt(0)) {
     x = generateRandomLetter();
     timer = 3;
-    letterX= letterStartX;
+    letterX = letterStartX;
   }
 
   changeState = false
   i = 0;
   while (i < 10 && changeState == false) {
-     i++;
-   }
+    i++;
+  }
 }
 
 
@@ -161,11 +157,12 @@ function title() {
   pop();
 }
 
+//instructions state
 function instructions() {
   push();
   background(instructionPic.image);
   textSize(60);
-  fill(250, 0,0);
+  fill(250, 0, 0);
   textAlign(CENTER, CENTER);
   text(`Instructions`, width / 2, 200);
   fill(0);
@@ -173,10 +170,11 @@ function instructions() {
   text(`before the timer runs out!`, width / 2, 400);
   textSize(25);
   fill(0)
-  text(`These are the letters that you will be using on your keyboard`, width/2, 490)
+  text(`These are the letters that you will be using on your keyboard`, width / 2, 490)
   pop();
 }
 
+//losing state
 function lose() {
   push();
   background(losingPic.image);
@@ -188,7 +186,7 @@ function lose() {
   textSize(10);
 }
 
-
+//calling all the piano rects
 function pinao() {
   pianoF();
   pianoA();
@@ -204,7 +202,8 @@ function pinao() {
   pianoDb();
   pianoGb();
 }
-//add a spotlight affect
+
+//drawing the pianos
 function pianoA() {
   rect(300 - 50, 400, 80, 250);
   push();
@@ -337,54 +336,41 @@ function pianoGb() {
   pop();
 }
 
+//moving states and playing sounds
 function keyPressed() {
+
   if (state === `title` && keyCode === 32) {
     state = 'instructions';
   } else if (state === 'instructions' && keyCode === 32) {
     state = 'simulation';
+  } else if (state === 'lose' && keyCode === 32) {
+      state = 'instructions';
 
 
-  }
-
-  else if (state === 'simulation' && keyCode === 90) {
+  } else if (state === 'simulation' && keyCode === 90) {
     a.play()
-  }
-  else if (state === 'simulation' && keyCode === 88) {
+  } else if (state === 'simulation' && keyCode === 88) {
     b.play()
-  }
-  else if (state === 'simulation' && keyCode === 67) {
+  } else if (state === 'simulation' && keyCode === 67) {
     c.play()
-  }
-
-  else if (state === 'simulation' && keyCode === 86) {
+  } else if (state === 'simulation' && keyCode === 86) {
     d.play()
-  }
-  else if (state === 'simulation' && keyCode === 66) {
+  } else if (state === 'simulation' && keyCode === 66) {
     e.play()
-  }
-  else if (state === 'simulation' && keyCode === 78) {
+  } else if (state === 'simulation' && keyCode === 78) {
     f.play()
-  }
-  else if (state === 'simulation' && keyCode === 77) {
+  } else if (state === 'simulation' && keyCode === 77) {
     g.play()
-  }
-  else if (state === 'simulation' && keyCode === 83) {
+  } else if (state === 'simulation' && keyCode === 83) {
     ab.play()
-  }
-  else if (state === 'simulation' && keyCode === 68) {
+  } else if (state === 'simulation' && keyCode === 68) {
     bb.play()
-  }
-  else if (state === 'simulation' && keyCode === 71) {
+  } else if (state === 'simulation' && keyCode === 71) {
     db.play()
-  }
-  else if (state === 'simulation' && keyCode === 72) {
+  } else if (state === 'simulation' && keyCode === 72) {
     eb.play()
-  }
-  else if (state === 'simulation' && keyCode === 74) {
+  } else if (state === 'simulation' && keyCode === 74) {
     gb.play()
-  }
-  else if (state === 'lose' && keyCode === 32) {
-    state = 'instructions';
   }
 
 }
