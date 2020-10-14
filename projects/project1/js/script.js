@@ -22,7 +22,7 @@ let gg;
 
 let letterStartX = 0;
 let letterX = letterStartX;
-let letterVX = 10;
+let letterVX = 8;
 let allowedTime = 5;
 
 let titlePic = {
@@ -37,6 +37,11 @@ let losingPic = {
 }
 
 let spotlight = {
+  x: undefined,
+  y: undefined,
+  image: undefined
+}
+let instructionPic = {
   x: undefined,
   y: undefined,
   image: undefined
@@ -64,6 +69,7 @@ function preload() {
   titlePic.image = loadImage("assets/images/title_cover.png");
   spotlight.image = loadImage("assets/images/spotlight.jpg");
   losingPic.image = loadImage("assets/images/losingPic.jpg");
+  instructionPic.image = loadImage("assets/images/instructionsPic1.png")
 };
 
 
@@ -157,14 +163,17 @@ function title() {
 
 function instructions() {
   push();
-  background(0);
+  background(instructionPic.image);
   textSize(60);
-  fill(200, 100, 100);
+  fill(250, 0,0);
   textAlign(CENTER, CENTER);
-  text(`instructions`, width / 2, height / 2);
-  text(`press spacebar for instructions`, width / 2, height / 1.5);
-  textSize(10);
-  text(`Use the keyboard to press the letters that come up on your screen!`, width / 2, height / 1.3);
+  text(`Instructions`, width / 2, 200);
+  fill(0);
+  text(`Press the Keys in the spotlight`, width / 2, 300);
+  text(`before the timer runs out!`, width / 2, 400);
+  textSize(25);
+  fill(0)
+  text(`These are the letters that you will be using on your keyboard`, width/2, 490)
   pop();
 }
 
