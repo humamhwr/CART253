@@ -19,20 +19,28 @@ let db;
 let eb;
 let gb;
 let gg;
+
+let letterStartX = 0;
+let letterX = letterStartX;
+let letterVX = 10;
+let allowedTime = 5;
+
 let titlePic = {
   x: undefined,
   y: undefined,
   image: undefined
 }
-let letter = {
-  string: ["A", "AB"],
-  x: 0,
-  y: 100,
-  vx: 3,
-  vy: 0,
-  speed: 3
+let losingPic = {
+  x: undefined,
+  y: undefined,
+  image: undefined
 }
 
+let spotlight = {
+  x: undefined,
+  y: undefined,
+  image: undefined
+}
 
 
 // setup()
@@ -54,11 +62,15 @@ function preload() {
   gg = loadSound(`assets/sounds/A.mp3`);
 
   titlePic.image = loadImage("assets/images/title_cover.png");
+  spotlight.image = loadImage("assets/images/spotlight.jpg");
+  losingPic.image = loadImage("assets/images/losingPic.jpg");
 };
 
 
 function setup() {
   createCanvas(900, 800);
+
+  // letterVX = width / (allowedTime * 60);
 }
 
 // draw()
@@ -76,11 +88,11 @@ function draw() {
   }
 }
 
-let timer = 5
+let timer = 3
 
 function generateRandomLetter() {
   var result = '';
-  var characters = ["A", "AB", "B", "Bb", "C", "D"];
+  var characters = ["Z", "X", "C", "V", "B", "N", "M","S", "D", "G", "H","J"];
   var charactersLength = characters.length;
 
   for (var i = 0; i < charactersLength; i++) {
@@ -97,14 +109,14 @@ function myFunction() {
 
 
 function simulation() {
+background(spotlight.image);
   pinao();
-  //generateRandomLetter();
-  //text(generateRandomLetter());
-  //letter.x = letter.x + letter.vx;
-  //text(letter.string, letter.x, letter.y)
+  push();
 textAlign(CENTER, CENTER);
+fill(255);
 textSize(100);
 text(timer, 150, 150);
+pop();
 
 if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
   timer --;
@@ -112,35 +124,23 @@ if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60
 if (timer == 0) {
   state = `lose`;
 }
-  text(x, 450, 250);
+letterX+= letterVX;
+textSize(100);
+  text(x, letterX, 250);
 
-  if (keyCode == x.charCodeAt(0)){
+  if (keyCode == x.charCodeAt(0)) {
     x = generateRandomLetter();
-    timer = 5;
+    timer = 3;
+    letterX= letterStartX;
   }
+
   changeState = false
   i = 0;
   while (i < 10 && changeState == false) {
      i++;
    }
-
-
-//}
-
-
-
-  // setupLetters();
 }
 
-// function setupLetters(length) {
-//    var text           = '';
-//    var characters       = 'ABCDEFG' ;
-//    var charactersLength = characters.length;
-//    for ( var i = 0; i < length; i++ ) {
-//       text += characters.charAt(Math.floor(Math.random() * charactersLength));
-//    }
-//    return text;
-// }
 
 //first state details:
 function title() {
@@ -150,7 +150,7 @@ function title() {
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
   text(`welcome to the piano school!`, width / 2, height / 2);
-  text(`press spacebar for instructions`, width / 2, height / 1.5);
+  text(`Press spacebar for instructions`, width / 2, height / 1.5);
   textSize(10);
   pop();
 }
@@ -170,12 +170,12 @@ function instructions() {
 
 function lose() {
   push();
-  background(0);
+  background(losingPic.image);
   textSize(60);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
-  text(`losing state!`, width / 2, height / 2);
-  text(`press spacebar to play again`, width / 2, height / 1.5);
+  text(`Game Over!`, width / 2, height / 2);
+  text(`press spacebar to try again`, width / 2, height / 1.5);
   textSize(10);
 }
 
@@ -197,7 +197,6 @@ function pinao() {
 }
 //add a spotlight affect
 function pianoA() {
-  background(0, 100, 250);
   rect(300 - 50, 400, 80, 250);
   push();
   textSize(40);
@@ -334,8 +333,49 @@ function keyPressed() {
     state = 'instructions';
   } else if (state === 'instructions' && keyCode === 32) {
     state = 'simulation';
-  } else if (state === 'simulation' && keyCode === 65) {
+
+
+  }
+
+  else if (state === 'simulation' && keyCode === 90) {
     a.play()
+  }
+  else if (state === 'simulation' && keyCode === 88) {
+    b.play()
+  }
+  else if (state === 'simulation' && keyCode === 67) {
+    c.play()
+  }
+
+  else if (state === 'simulation' && keyCode === 86) {
+    d.play()
+  }
+  else if (state === 'simulation' && keyCode === 66) {
+    e.play()
+  }
+  else if (state === 'simulation' && keyCode === 78) {
+    f.play()
+  }
+  else if (state === 'simulation' && keyCode === 77) {
+    g.play()
+  }
+  else if (state === 'simulation' && keyCode === 83) {
+    ab.play()
+  }
+  else if (state === 'simulation' && keyCode === 68) {
+    bb.play()
+  }
+  else if (state === 'simulation' && keyCode === 71) {
+    db.play()
+  }
+  else if (state === 'simulation' && keyCode === 72) {
+    eb.play()
+  }
+  else if (state === 'simulation' && keyCode === 74) {
+    gb.play()
+  }
+  else if (state === 'lose' && keyCode === 32) {
+    state = 'instructions';
   }
 
 }
