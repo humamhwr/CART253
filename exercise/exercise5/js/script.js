@@ -1,10 +1,10 @@
 /**************************************************
-Template p5 project
-Pippin Barr
+Excercise 5
+Hummam Houara
 
-Here is a description of this template p5 project.
+bio goes here
 **************************************************/
-
+"use strict";
 // setup()
 //
 // Description of setup() goes here.
