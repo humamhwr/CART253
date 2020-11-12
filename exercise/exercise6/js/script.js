@@ -6,8 +6,8 @@
 let = state = 'title';
 let mic;
 let birdImage = {
-  x: 10,
-  y: undefined,
+  x: 600,
+  y: 300,
   width: 2,
   height: 2,
 };
@@ -56,9 +56,9 @@ function draw() {
       cloud.display();
     }
     // check for the bird falling
-    if (birdImage.x > 600) {
-      state = 'lose';
-    }
+    if (birdImage.x < 0 || birdImage.x > width) {
+  state = `lose`;
+}
   }
   //making the effect of the bird flying from the mic input
   micLevel = mic.getLevel();
@@ -82,7 +82,7 @@ function title() {
 //losing state
 function lose() {
   push();
-  background(losingPic.image);
+  background(0);
   textSize(60);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
