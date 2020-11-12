@@ -3,10 +3,10 @@
 // once the bird drops, the playes loses.
 //*****************************************
 
-
+let = state = 'title';
 let mic;
 let birdImage = {
-  x: undefined,
+  x: 10,
   y: undefined,
   width: 2,
   height: 2,
@@ -27,6 +27,7 @@ function setup() {
 
   mic = new p5.AudioIn();
   mic.start();
+
   //showing the cloud
   for (let i = 0; i < numclouds; i++) {
     let x = random(0, width);
@@ -37,16 +38,62 @@ function setup() {
 }
 
 function draw() {
-  background(135, 206, 235);
+  if (state === `title`) {
+    title();
+  } else if (state === 'simulation') {
+    simulation();
+  } else if (state === `lose`) {
+    lose();
+  }
 
-  for (let i = 0; i < clouds.length; i++) {
-    let cloud = clouds[i];
-    cloud.move();
-    cloud.wrap();
-    cloud.display();
+  //the simulation
+  function simulation() {
+    background(135, 206, 235);
+    for (let i = 0; i < clouds.length; i++) {
+      let cloud = clouds[i];
+      cloud.move();
+      cloud.wrap();
+      cloud.display();
+    }
+    // check for the bird falling
+    if (birdImage.x > 600) {
+      state = 'lose';
+    }
   }
   //making the effect of the bird flying from the mic input
   micLevel = mic.getLevel();
   let y = height - micLevel * height;
   image(birdImage, width / 2, y);
+}
+
+//first state details:
+function title() {
+  push();
+  background(0)
+  textSize(30);
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
+  text(`Keep the bird flying by using your voice!`, width / 2, height / 2);
+  text(`Press spacebar to start`, width / 2, height / 1.5);
+  textSize(10);
+  pop();
+}
+
+//losing state
+function lose() {
+  push();
+  background(losingPic.image);
+  textSize(60);
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
+  text(`Game Over!`, width / 2, height / 2);
+  textSize(10);
+  pop();
+}
+
+//changing from title to simulation
+function keyPressed() {
+  if (state === `title` && keyCode === 32) {
+    state = 'simulation';
+  }
 }
