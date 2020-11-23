@@ -5,14 +5,9 @@ let birdImage = {
   y: 300,
   width: 2,
   height: 2,
-  vx: 0,
-  vy: 0
 };
 let clouds = [];
 let numclouds = 10;
-
-let gravity = 0.1;
-let flapForce = -1;
 
 //preloading media
 function preload() {
@@ -38,10 +33,6 @@ function setup() {
 }
 
 function draw() {
-
-  //NEW apply gravity
-  birdImage.vy = birdImage.vy + gravity;
-
   if (state === `title`) {
     title();
   } else if (state === 'simulation') {
@@ -65,14 +56,8 @@ function draw() {
 }
   }
   //making the effect of the bird flying from the mic input
-  let level = mic.getLevel();
-  if (level > 0.1) {
-    flap();
-  }
-  //NEW apply velocity
-  birdImage.x = birdImage.x + birdImage.vx;
-  birdImage.y = birdImage.y + birdImage.vy;
-
+  micLevel = mic.getLevel();
+  birdImage.y = height - micLevel * height;
   image(birdImage, width / 2, birdImage.y);
 }
 
@@ -100,9 +85,7 @@ function lose() {
   textSize(10);
   pop();
 }
-function flap() {
-  circle.vy = circle.vy + flapForce;
-}
+
 //changing from title to simulation
 function keyPressed() {
   if (state === `title` && keyCode === 32) {
