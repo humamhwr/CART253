@@ -1,3 +1,5 @@
+"use Strict "
+let backgroundMusic;
 
 let = state = 'title';
 let titlePic = {
@@ -30,6 +32,7 @@ function preload() {
   panelPic.image = loadImage("assets/images/panel.jpg");
   machine.image = loadImage('assets/images/machine.png')
   segaFont = loadFont('assets/SEGA.TTF');
+  backgroundMusic = loadSound(`assets/sounds/background.mp3`);
 
   };
 // setup()
@@ -94,9 +97,9 @@ function instructions() {
   textSize(40);
   text(`Use the arrow keys as a joystick `, width / 2, 400);
   text(`and the space bar as the button`, width / 2, 500);
-  textSize(25);
+  textSize(20);
   fill(255)
-  text(`0`, width / 2, 490)
+  text(`Space bar to start the game`, width / 2, 550)
   pop();
 }
 
@@ -119,10 +122,10 @@ function keyPressed() {
 
   if (state === `title` && keyCode === 32) {
     state = 'instructions';
+    backgroundMusic.play();
   } else if (state === 'instructions' && keyCode === 32) {
     state = 'simulation';
   } else if (state === 'lose' && keyCode === 32) {
       state = 'instructions';
-
 }
 }
