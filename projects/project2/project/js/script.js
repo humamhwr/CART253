@@ -96,6 +96,8 @@ function simulation() {
 
 //first state details:
 function title() {
+  // image(arcade.image, 200, 250 , 100, 100);
+
   push();
   background(titlePic.image);
   textSize(30);
@@ -107,7 +109,7 @@ function title() {
   text(`*Music will be playing*`, width / 2, 500);
   textSize(10);
   pop();
-  // image(arcade, 200, 250);
+
 }
 
 //instructions state
@@ -134,7 +136,9 @@ function instructions() {
 //losing state
 function lose() {
   push();
-  background(gameOver.image);
+  strokeWeight(5);
+  line(200, 300, 500, 600);
+  background(255);
   textSize(60);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
