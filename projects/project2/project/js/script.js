@@ -32,16 +32,69 @@ let arcade = {
   y: undefined,
   image: undefined,
 }
+let amazon = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+
+let walmart = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+let vaccine = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+
+let security = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+
+let js = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+
+let box = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+
 
 let segaFont;
 
 //pre loading media, assests, audio and fonts
 function preload() {
   titlePic.image = loadImage("assets/images/titlePic.gif");
-  arcade.image = loadImage("assets/images/arcade.jpg");
+  arcade.image = loadImage("assets/images/arcade.png");
   panelPic.image = loadImage("assets/images/panel.jpg");
-  machine.image = loadImage('assets/images/machine.png')
-  gameOver.image = loadImage('assets/images/end.gif')
+  machine.image = loadImage('assets/images/machine.png');
+  gameOver.image = loadImage('assets/images/end.gif');
+  amazon.image = loadImage('assets/images/amazon.png');
+  walmart.image = loadImage('assets/images/walmart.png');
+  vaccine.image = loadImage('assets/images/vaccine.png');
+  security.image = loadImage('assets/images/security.jpg');
+  js.image = loadImage('assets/images/Js.png');
+  box.image = loadImage('assets/images/box.JPG');
   segaFont = loadFont('assets/SEGA.TTF');
   backgroundMusic = loadSound(`assets/sounds/background.mp3`);
 
@@ -81,6 +134,7 @@ function simulation() {
   //setting up the timer
   push();
   textAlign(CENTER, CENTER);
+
   fill(255);
   textSize(80);
   text(timer, 100, 120);
@@ -91,6 +145,13 @@ function simulation() {
   if (timer == 0) {
     state = `lose`;
   }
+  //displaying all prizes and images on the machine
+  image(amazon.image, 450, 230, 90, 50);
+  image(walmart.image, 350, 230, 90, 50);
+  image(vaccine.image, 460, 85, 120, 130);
+  image(security.image, 410, 120, 80, 80);
+  image(js.image, 330, 120, 80, 80);
+  image(box.image, 385, 475, 110, 90);
 
 }
 
@@ -108,6 +169,10 @@ function title() {
   fill(100, 100, 100);
   text(`*Music will be playing*`, width / 2, 500);
   textSize(10);
+  pop();
+  push();
+  imageMode(CENTER);
+  image(arcade.image, 450, 120, 400, 200);
   pop();
 
 }
