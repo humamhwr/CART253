@@ -153,6 +153,12 @@ function simulation() {
   image(js.image, 330, 120, 80, 80);
   image(box.image, 385, 475, 110, 90);
 
+//drawing the bars
+strokeWeight(5);
+fill(255);
+line(320, 80, 320, 380);
+line(305 , 353 , 555, 353)
+
 }
 
 //first state details:
