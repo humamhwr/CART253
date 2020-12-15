@@ -97,7 +97,7 @@ let segaFont;
 //pre loading media, assests, audio and fonts
 function preload() {
   //can't use a loop beacuse file format varries
-  titlePic.image = loadImage("assets/images/titlePic.gif");
+  titlePic.image = loadImage("assets/images/titlepic.gif");
   arcade.image = loadImage("assets/images/arcade.png");
   panelPic.image = loadImage("assets/images/panel.jpg");
   machine.image = loadImage('assets/images/machine.png');
