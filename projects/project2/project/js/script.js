@@ -79,11 +79,24 @@ let box = {
   image: undefined,
 }
 
+let key = {
+  x: undefined,
+  y: undefined,
+  width: 1,
+  height: 1,
+  image: undefined,
+}
+
+let x1 = 320;
+let x2 = 320;
+var y1 = 353;
+var y2 = 353;
 
 let segaFont;
 
 //pre loading media, assests, audio and fonts
 function preload() {
+  //can't use a loop beacuse file format varries
   titlePic.image = loadImage("assets/images/titlePic.gif");
   arcade.image = loadImage("assets/images/arcade.png");
   panelPic.image = loadImage("assets/images/panel.jpg");
@@ -95,6 +108,7 @@ function preload() {
   security.image = loadImage('assets/images/security.jpg');
   js.image = loadImage('assets/images/Js.png');
   box.image = loadImage('assets/images/box.JPG');
+  key.image = loadImage('assets/images/key.png');
   segaFont = loadFont('assets/SEGA.TTF');
   backgroundMusic = loadSound(`assets/sounds/background.mp3`);
 
@@ -134,7 +148,6 @@ function simulation() {
   //setting up the timer
   push();
   textAlign(CENTER, CENTER);
-
   fill(255);
   textSize(80);
   text(timer, 100, 120);
@@ -146,18 +159,10 @@ function simulation() {
     state = `lose`;
   }
   //displaying all prizes and images on the machine
-  image(amazon.image, 450, 230, 90, 50);
-  image(walmart.image, 350, 230, 90, 50);
-  image(vaccine.image, 460, 85, 120, 130);
-  image(security.image, 410, 120, 80, 80);
-  image(js.image, 330, 120, 80, 80);
-  image(box.image, 385, 475, 110, 90);
+  prizes();
+  bars();
 
-//drawing the bars
-strokeWeight(5);
-fill(255);
-line(320, 80, 320, 380);
-line(305 , 353 , 555, 353)
+  //drawing the bars
 
 }
 
@@ -218,7 +223,20 @@ function lose() {
 }
 
 
+function prizes() {
+  image(amazon.image, 450, 230, 90, 50);
+  image(walmart.image, 350, 230, 90, 50);
+  image(vaccine.image, 460, 85, 120, 130);
+  image(security.image, 410, 120, 80, 80);
+  image(js.image, 330, 120, 80, 80);
+  image(box.image, 385, 475, 110, 90);
+  push();
+  imageMode(CENTER);
+  image(key.image, x1, y2, 110, 75);
+  pop();
 
+
+}
 
 //moving states and playing sounds
 function keyPressed() {
@@ -227,7 +245,26 @@ function keyPressed() {
     // backgroundMusic.play();
   } else if (state === 'instructions' && keyCode === 32) {
     state = 'simulation';
+
+  } else if (state === 'simulation' && keyCode === 39 === true) {
+    x1++;
+   x2++;
+  } else if (state === 'simulation' && keyCode === 38) {
+    y1 = y1 - 5;
+    y2 = y2 - 5;
   } else if (state === 'lose' && keyCode === 32) {
     state = 'instructions';
   }
+}
+
+//drawing the bars
+function bars () {
+strokeWeight(5);
+fill(255);
+line(x1, 80, x2, 380);
+line(305, y1, 555, y2)
+
+if (x1 >= 600) {
+  x1 = 0;
+}
 }
