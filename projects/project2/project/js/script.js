@@ -68,7 +68,7 @@ let js = {
   x: 330,
   y: 120,
   w: 80,
-  h:80,
+  h: 80,
   image: undefined,
 }
 
@@ -89,6 +89,7 @@ let key = {
   size: 100
 }
 
+//vars for value of the lines so they could be controllable
 var x1 = 320;
 var x2 = 320;
 
@@ -101,7 +102,7 @@ var y3 = 320;
 var x4 = 330;
 var y4 = 380;
 
-
+//loading the font
 let segaFont;
 
 //pre loading media, assests, audio and fonts
@@ -168,7 +169,7 @@ function simulation() {
   if (timer == 0) {
     state = `lose`;
   }
-  //displaying all prizes and images on the machine
+  //displaying all prizes and images on the machine from the functions
   prizes();
   bars();
   win();
@@ -207,7 +208,7 @@ function instructions() {
   fill(255, 0, 0);
   textSize(25);
   text(`Use the arrow keys as a joystick to move left and right `, width / 2, 300);
-  text(`and the space bar as the button to go up and down`, width / 2, 400);
+  text(`and the space bar as the button to go up `, width / 2, 400);
   text(`You have 31 seconds to win a prize`, width / 2, 500);
   textSize(20);
   fill(255)
@@ -235,7 +236,7 @@ function prizes() {
   image(vaccine.image, vaccine.x, vaccine.y, vaccine.w, vaccine.h);
   image(security.image, security.x, security.y, security.w, security.h);
   image(js.image, js.x, js.y, js.w, js.h);
-  image(box.image, box.x, box.y, box.w,box.h);
+  image(box.image, box.x, box.y, box.w, box.h);
   push();
   imageMode(CENTER);
   image(key.image, x3, y3, 90, 65);
@@ -249,6 +250,7 @@ function bars() {
   line(305, y1, 555, y2)
   line(x3, y3, x4, y4);
 
+//not allowing the bars to go past the canvas
   if (x1 >= 600) {
     x1 = 0;
   }
@@ -263,10 +265,11 @@ function bars() {
 function keyPressed() {
   if (state === `title` && keyCode === 32) {
     state = 'instructions';
-    // backgroundMusic.play();
+    backgroundMusic.play();
   } else if (state === 'instructions' && keyCode === 32) {
     state = 'simulation';
 
+//controling the bars when key is pressed by adding value to the lines (shapes)
   } else if (state === 'simulation' && keyCode === 39 === true) {
     x1 = x1 + 5;
     x2 = x2 + 5;
@@ -282,45 +285,46 @@ function keyPressed() {
     y3 = y3 - 10;
     key.y = key.y - 10;
 
+//changing state
 
   } else if (state === 'lose' && keyCode === 32) {
     state = 'instructions';
   }
 }
 
+//function for when the spacebar is down (pressed) and the key touches the picture, the box prize picture will change and the gift text will appear
 function win() {
   //JS
   let d1 = dist(key.x, key.y, js.x, js.y);
   if (d1 < key.size / 2 + js.size / 2) {
-    text(`Congratulations! you won 0 JS errors for the rest of your life`, width / 2, height / 2);
-    image(js.image, 385, 475, 90, 50);
-  }
-  //Cyber privacy
-  let d2 = dist(key.x, key.y, security.x, security.y);
-  if (d2 < key.size / 2 + security.size / 2) {
-    text(`Congratulations! you won Cyber privacy for the rest of your life`, width / 2, height / 2);
-    image(security.image, 385, 475, 90, 50);
-  }
-  //covid-19
-  let d3 = dist(key.x, key.y, vaccine.x, vaccine.y);
-  if (d3 < key.size / 2 + vaccine.size / 2) {
-    text(`Congratulations! you won a COVId-19 Vaccine shot`, width / 2, height / 2);
-    image(vaccine.image, 385, 475, 90, 50);
-  }
+    text((keyIsDown(32)) && (`Congratulations! you won 0 JS errors for the rest of your life`, width / 2, height / 2); image(js.image, 385, 475, 90, 50);
+    }
+    //Cyber privacy
+    let d2 = dist(key.x, key.y, security.x, security.y);
+    if ((keyIsDown(32)) && (d2 < key.size / 2 + security.size / 2) {
+        text(`Congratulations! you won Cyber privacy for the rest of your life`, width / 2, height / 2);
+        image(security.image, 385, 475, 90, 50);
+      }
+      //covid-19
+      let d3 = dist(key.x, key.y, vaccine.x, vaccine.y);
+      if ((keyIsDown(32)) && (d3 < key.size / 2 + vaccine.size / 2) {
+          text(`Congratulations! you won a COVId-19 Vaccine shot`, width / 2, height / 2);
+          image(vaccine.image, 385, 475, 90, 50);
+        }
 
-  //walmart
-  let d4 = dist(key.x, key.y, walmart.x, walmart.y);
-  if (d4 < key.size / 2 + walmart.size / 2) {
-    text(`Congratulations! you won 500$ walmart card -500$ from local buiness`, width / 2, height / 2);
-    image(walmart.image, 385, 475, 90, 50);
-  }
+        //walmart
+        let d4 = dist(key.x, key.y, walmart.x, walmart.y);
+        if ((keyIsDown(32)) && (d4 < key.size / 2 + walmart.size / 2) {
+            text(`Congratulations! you won 500$ walmart card -500$ from local buiness`, width / 2, height / 2);
+            image(walmart.image, 385, 475, 90, 50);
+          }
 
-  //amazon
-  let d5 = dist(key.x, key.y, amazon.x, amazon.y);
-  if (d5 < key.size / 2 + amazon.size / 2) {
-    text(`Congratulations! you won 50$ gift card from a capitalist store`, width / 2, height / 2);
-    image(amazon.image, 385, 475, 90, 50);
-  }
+          //amazon
+          let d5 = dist(key.x, key.y, amazon.x, amazon.y);
+          if ((keyIsDown(32)) && (d5 < key.size / 2 + amazon.size / 2)) {
+            text(`Congratulations! you won 50$ gift card from a capitalist store`, width / 2, height / 2);
+            image(amazon.image, 385, 475, 90, 50);
+          }
 
 
-}
+        }
