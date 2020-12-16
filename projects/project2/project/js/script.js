@@ -33,64 +33,74 @@ let arcade = {
   image: undefined,
 }
 let amazon = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 450,
+  y: 230,
+  w: 90,
+  h: 50,
   image: undefined,
 }
 
 let walmart = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 350,
+  y: 230,
+  w: 90,
+  h: 50,
   image: undefined,
+  size: 100,
 }
 let vaccine = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 460,
+  y: 85,
+  w: 120,
+  h: 130,
   image: undefined,
 }
 
 let security = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 410,
+  y: 120,
+  w: 80,
+  h: 80,
   image: undefined,
 }
 
 let js = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 330,
+  y: 120,
+  w: 80,
+  h:80,
   image: undefined,
 }
 
 let box = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 385,
+  y: 475,
+  w: 110,
+  h: 90,
   image: undefined,
 }
 
 let key = {
-  x: undefined,
-  y: undefined,
-  width: 1,
-  height: 1,
+  x: 330,
+  y: 320,
+  w: 1,
+  h: 1,
   image: undefined,
+  size: 100
 }
 
-let x1 = 320;
-let x2 = 320;
+var x1 = 320;
+var x2 = 320;
+
 var y1 = 353;
 var y2 = 353;
+
+var x3 = 330;
+var y3 = 320;
+
+var x4 = 330;
+var y4 = 380;
+
 
 let segaFont;
 
@@ -136,7 +146,7 @@ function draw() {
   }
 }
 //defining the timer
-let timer = 30
+let timer = 70
 
 
 
@@ -161,15 +171,12 @@ function simulation() {
   //displaying all prizes and images on the machine
   prizes();
   bars();
-
-  //drawing the bars
-
+  win();
 }
+
 
 //first state details:
 function title() {
-  // image(arcade.image, 200, 250 , 100, 100);
-
   push();
   background(titlePic.image);
   textSize(30);
@@ -185,7 +192,6 @@ function title() {
   imageMode(CENTER);
   image(arcade.image, 450, 120, 400, 200);
   pop();
-
 }
 
 //instructions state
@@ -222,19 +228,34 @@ function lose() {
   textSize(10);
 }
 
-
+// displaying the prizes/pictures in a function
 function prizes() {
-  image(amazon.image, 450, 230, 90, 50);
-  image(walmart.image, 350, 230, 90, 50);
-  image(vaccine.image, 460, 85, 120, 130);
-  image(security.image, 410, 120, 80, 80);
-  image(js.image, 330, 120, 80, 80);
-  image(box.image, 385, 475, 110, 90);
+  image(amazon.image, amazon.x, amazon.y, amazon.w, amazon.h);
+  image(walmart.image, walmart.x, walmart.y, walmart.w, walmart.h);
+  image(vaccine.image, vaccine.x, vaccine.y, vaccine.w, vaccine.h);
+  image(security.image, security.x, security.y, security.w, security.h);
+  image(js.image, js.x, js.y, js.w, js.h);
+  image(box.image, box.x, box.y, box.w,box.h);
   push();
   imageMode(CENTER);
-  image(key.image, x1, y2, 110, 75);
+  image(key.image, x3, y3, 90, 65);
   pop();
+}
 
+//drawing the bars
+function bars() {
+  strokeWeight(5);
+  line(x1, 80, x2, 380);
+  line(305, y1, 555, y2)
+  line(x3, y3, x4, y4);
+
+  if (x1 >= 600) {
+    x1 = 0;
+  }
+
+  if (y3 >= 330) {
+    y3 = 330;
+  }
 
 }
 
@@ -247,24 +268,59 @@ function keyPressed() {
     state = 'simulation';
 
   } else if (state === 'simulation' && keyCode === 39 === true) {
-    x1++;
-   x2++;
+    x1 = x1 + 5;
+    x2 = x2 + 5;
+    x3 = x3 + 5;
+    x4 = x4 + 5;
+
   } else if (state === 'simulation' && keyCode === 38) {
     y1 = y1 - 5;
     y2 = y2 - 5;
+    y3 = y3 - 5;
+    y4 = y4 - 5;
+  } else if (state === 'simulation' && keyCode === 32) {
+    y3 = y3 - 10;
+    key.y = key.y - 10;
+
+
   } else if (state === 'lose' && keyCode === 32) {
     state = 'instructions';
   }
 }
 
-//drawing the bars
-function bars () {
-strokeWeight(5);
-fill(255);
-line(x1, 80, x2, 380);
-line(305, y1, 555, y2)
+function win() {
+  //JS
+  let d1 = dist(key.x, key.y, js.x, js.y);
+  if (d1 < key.size / 2 + js.size / 2) {
+    text(`Congratulations! you won 0 JS errors for the rest of your life`, width / 2, height / 2);
+    image(js.image, 385, 475, 90, 50);
+  }
+  //Cyber privacy
+  let d2 = dist(key.x, key.y, security.x, security.y);
+  if (d2 < key.size / 2 + security.size / 2) {
+    text(`Congratulations! you won Cyber privacy for the rest of your life`, width / 2, height / 2);
+    image(security.image, 385, 475, 90, 50);
+  }
+  //covid-19
+  let d3 = dist(key.x, key.y, vaccine.x, vaccine.y);
+  if (d3 < key.size / 2 + vaccine.size / 2) {
+    text(`Congratulations! you won a COVId-19 Vaccine shot`, width / 2, height / 2);
+    image(vaccine.image, 385, 475, 90, 50);
+  }
 
-if (x1 >= 600) {
-  x1 = 0;
-}
+  //walmart
+  let d4 = dist(key.x, key.y, walmart.x, walmart.y);
+  if (d4 < key.size / 2 + walmart.size / 2) {
+    text(`Congratulations! you won 500$ walmart card -500$ from local buiness`, width / 2, height / 2);
+    image(walmart.image, 385, 475, 90, 50);
+  }
+
+  //amazon
+  let d5 = dist(key.x, key.y, amazon.x, amazon.y);
+  if (d5 < key.size / 2 + amazon.size / 2) {
+    text(`Congratulations! you won 50$ gift card from a capitalist store`, width / 2, height / 2);
+    image(amazon.image, 385, 475, 90, 50);
+  }
+
+
 }
